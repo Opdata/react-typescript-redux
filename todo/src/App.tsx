@@ -1,6 +1,7 @@
-import { useSelector } from 'react-redux';
-import { add, complete, selectedList } from './reducers/todoList';
-import { input, submit, status } from './reducers/todoItem';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { add, complete, selectList } from './reducers/todoList';
+import { RootState, submit, selectItem } from './reducers/todoItem';
 import TodoItem from './component/todoItem';
 
 /**
@@ -17,28 +18,32 @@ import TodoItem from './component/todoItem';
  */
 
 function App() {
-  // onclick, onsubmit
+  const [item, setItem] = useState<string>('');
+  const selectedList = useSelector(selectList);
+  const dispatch = useDispatch();
+  const getItem = useSelector(selectItem);
 
-  const selectListed: Array<object> = useSelector(selectedList);
-
-  const onSubmit = () => {
-    //
+  const onSubmit = (e: React.FormEvent) => {
+    dispatch(submit(item));
+    dispatch(add(getItem));
+    setItem('');
+    e.preventDefault();
   };
 
-  const onClickItem = () => {
-    //
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    setItem(value);
   };
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
-        <input></input>
-        <button onClick={onClickItem}>추가</button>
+      <form onSubmit={(e) => onSubmit(e)}>
+        <input onChange={(e) => onChange(e)} value={item}></input>
+        <button type="submit">추가</button>
       </form>
-      {selectListed &&
-        selectListed.map((value: any, index: number) => (
-          <TodoItem key={index} value={value} />
-        ))}
+      {selectedList.map((data: any, index: number) => (
+        <TodoItem key={index} value={data} />
+      ))}
     </div>
   );
 }
