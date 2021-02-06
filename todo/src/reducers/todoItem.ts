@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export interface RootState {
+  id: number;
+  text: string;
+  completedStatus: boolean;
+}
+
+const initialState: RootState = {
   id: 0,
   text: '',
   completedStatus: false,
@@ -10,20 +16,15 @@ const todoItem = createSlice({
   name: 'todoItem',
   initialState,
   reducers: {
-    input: (state, action) => {
+    submit: (state, action) => {
+      state.id = state.id++;
       state.text = action.payload;
-    },
-
-    submit: (state) => {
-      state.id = state.id + 1;
-    },
-
-    status: (state) => {
-      state.completedStatus = !state.completedStatus;
     },
   },
 });
 
-export const { input, submit, status } = todoItem.actions;
+export const { submit } = todoItem.actions;
+
+export const selectItem = (state: any) => state.todoItem;
 
 export default todoItem.reducer;
