@@ -1,7 +1,8 @@
 import { add, complete } from '../reducers/todoList';
-import { input, submit, status } from '../reducers/todoItem';
+import { submit } from '../reducers/todoItem';
 
 const todoItem = ({ value }: { value: any }) => {
+  console.log(value);
   const onCompleted = () => {
     // Status Complted Function
   };
@@ -16,7 +17,7 @@ const todoItem = ({ value }: { value: any }) => {
         textDecoration: value.completedStatus ? 'line-through' : 'none',
       }}
     >
-      <input type="checkbox" checked={value.completedStatus}></input>
+      <input type="checkbox" defaultChecked={value.completedStatus}></input>
       <b>{value.text}</b>
       <button style={{ marginLeft: '10px' }} onClick={onCompleted}>
         완료
