@@ -1,8 +1,4 @@
-import { add, complete } from '../reducers/todoList';
-import { submit } from '../reducers/todoItem';
-
 const todoItem = ({ value }: { value: any }) => {
-  console.log(value);
   const onCompleted = () => {
     // Status Complted Function
   };
