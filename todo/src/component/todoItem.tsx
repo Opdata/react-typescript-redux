@@ -1,9 +1,17 @@
-const todoItem = ({ value }: { value: any }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../types/types';
+import { complete, deleteItem, selectList } from '../reducers/todoList';
+
+const TodoItem = ({ index, value }: { index: number; value: RootState }) => {
+  const dispatch = useDispatch();
+  const selectedList = useSelector(selectList);
+
   const onCompleted = () => {
-    // Status Complted Function
+    dispatch(complete({ index }));
   };
+
   const onRemove = () => {
-    // List Delete Function
+    dispatch(deleteItem({ selectedList, index }));
   };
 
   return (
@@ -13,7 +21,7 @@ const todoItem = ({ value }: { value: any }) => {
         textDecoration: value.completedStatus ? 'line-through' : 'none',
       }}
     >
-      <input type="checkbox" defaultChecked={value.completedStatus}></input>
+      <input type="checkbox" checked={value.completedStatus} readOnly></input>
       <b>{value.text}</b>
       <button style={{ marginLeft: '10px' }} onClick={onCompleted}>
         완료
@@ -25,4 +33,4 @@ const todoItem = ({ value }: { value: any }) => {
   );
 };
 
-export default todoItem;
+export default TodoItem;
