@@ -1,44 +1,33 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { add, complete, selectList } from './reducers/todoList';
-import { RootState, submit, selectItem } from './reducers/todoItem';
+import { RootState } from './types/types';
+import { add, selectList } from './reducers/todoList';
 import TodoItem from './component/todoItem';
 
-/**
- * todoItem
- * @property input
- * @property submit
- * @property status
- */
-
-/**
- * todoList
- * @property add
- * @property complete
- */
-
 function App() {
-  const [item, setItem] = useState<string>('');
+  const [textInput, setTextInput] = useState<RootState>({
+    id: 0,
+    text: '',
+    completedStatus: false,
+  });
   const selectedList = useSelector(selectList);
   const dispatch = useDispatch();
-  const getItem = useSelector(selectItem);
 
   const onSubmit = (e: React.FormEvent) => {
-    dispatch(submit(item));
-    dispatch(add(getItem));
-    setItem('');
+    dispatch(add(textInput));
+    setTextInput((state) => ({ ...state, id: state.id + 1, text: '' }));
     e.preventDefault();
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-    setItem(value);
+    const { value } = e.target;
+    setTextInput((state) => ({ ...state, text: value }));
   };
 
   return (
     <div>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <input onChange={(e) => onChange(e)} value={item}></input>
+      <form onSubmit={onSubmit}>
+        <input onChange={onChange} value={textInput.text}></input>
         <button type="submit">추가</button>
       </form>
       {selectedList.map((data: any, index: number) => (
