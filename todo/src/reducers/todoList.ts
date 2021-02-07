@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from './todoItem';
+import { RootState } from '../types/types';
 
 const initialState: Array<RootState | undefined> = [];
 
@@ -12,6 +12,10 @@ const todoList = createSlice({
     },
 
     complete: (state) => {
+      // console.log(state);
+    },
+
+    delete: (state) => {
       // console.log(state);
     },
   },
