@@ -10,8 +10,8 @@ function App() {
     text: '',
     completedStatus: false,
   });
-  const selectedList = useSelector(selectList);
   const dispatch = useDispatch();
+  const selectedList = useSelector(selectList);
 
   const onSubmit = (e: React.FormEvent) => {
     dispatch(add(textInput));
@@ -30,8 +30,8 @@ function App() {
         <input onChange={onChange} value={textInput.text}></input>
         <button type="submit">추가</button>
       </form>
-      {selectedList.map((data: any, index: number) => (
-        <TodoItem key={index} value={data} />
+      {selectedList.map((data: RootState, index: number) => (
+        <TodoItem key={index} index={index} value={data} />
       ))}
     </div>
   );
