@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../types/types';
 
-const initialState: Array<RootState | undefined> = [];
+const initialState: Array<RootState> = [];
 
 const todoList = createSlice({
   name: 'todoList',
@@ -11,17 +11,18 @@ const todoList = createSlice({
       state.push(action.payload);
     },
 
-    complete: (state) => {
-      // console.log(state);
+    complete: (state, action) => {
+      state[action.payload.index].completedStatus = !state[action.payload.index]
+        .completedStatus;
     },
 
-    delete: (state) => {
-      // console.log(state);
+    deleteItem: (state, action) => {
+      state.splice(action.payload.index, 1);
     },
   },
 });
 
-export const { add, complete } = todoList.actions;
+export const { add, complete, deleteItem } = todoList.actions;
 
 export const selectList = (state: any) => state.todoList;
 
