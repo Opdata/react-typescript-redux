@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-export interface RootState {
-  id: number;
-  text: string;
-  completedStatus: boolean;
-}
+import { RootState } from '../types/types';
 
 const initialState: RootState = {
   id: 0,
